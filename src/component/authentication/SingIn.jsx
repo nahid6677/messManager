@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
 import AuthContext from '../context/AuthContext';
@@ -9,6 +9,7 @@ const SingIn = () => {
     const [error, setError] = useState('')
     const [passShow, setPassShow] = useState(false)
     const emailRef = useRef(null);
+     const navigate = useNavigate()
 
     const isValidEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,6 +39,7 @@ const SingIn = () => {
             signInUser(email, password)
             .then(result =>{
                 console.log(result);
+                navigate("/")
             })
             .catch(err =>{
                 console.log(err);

@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
 const SingUp = () => {
-    const {signUpUser} = useContext(AuthContext);
+    const {signUpUser,prfileUpdate} = useContext(AuthContext);
     const [passShow, setPassShow] = useState(false)
     const [passShowc, setPassShowc] = useState(false)
     const [error, setError] = useState('')
@@ -46,6 +46,15 @@ const SingUp = () => {
             signUpUser(email, cpassword)
             .then(result =>{
                 console.log(result)
+                if (result.user.email) {
+                        prfileUpdate({
+                            displayName: fullName
+                        })
+                            .catch((err) => {
+                                console.log(err.message)
+                            })
+                            navigate("/")
+                    }
             })
             .catch(err =>{
                 setError(err);
