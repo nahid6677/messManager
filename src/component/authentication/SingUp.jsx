@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
 const SingUp = () => {
-    const {signUpUser,prfileUpdate} = useContext(AuthContext);
+    const { signUpUser, prfileUpdate, setLoading, pupupLogin } = useContext(AuthContext);
     const [passShow, setPassShow] = useState(false)
     const [passShowc, setPassShowc] = useState(false)
     const [error, setError] = useState('')
@@ -41,31 +41,42 @@ const SingUp = () => {
             return
         }
         if (isValidPassword(password) && isValidPassword(cpassword) && isValidEmail(email)) {
-            console.log({email, password, cpassword, fullName})
+            console.log({ email, password, cpassword, fullName })
             setError("")
             signUpUser(email, cpassword)
-            .then(result =>{
-                console.log(result)
-                if (result.user.email) {
+                .then(result => {
+                    console.log(result)
+                    if (result.user.email) {
+                        setLoading(false);
                         prfileUpdate({
                             displayName: fullName
                         })
                             .catch((err) => {
                                 console.log(err.message)
                             })
-                            navigate("/")
+                        navigate("/")
                     }
-            })
-            .catch(err =>{
-                setError(err);
-                console.log(err);
-            })
+                })
+                .catch(err => {
+                    setError(err);
+                    setLoading(false)
+                    console.log(err);
+                })
 
         }
 
     }
     const handlePupUpLogin = () => {
-
+        pupupLogin()
+            .then(result => {
+                setLoading(false)
+                navigate("/")
+                console.log(result);
+            })
+            .catch(err =>{
+                setLoading(false)
+                console.log(err)
+            })
     }
 
     return (

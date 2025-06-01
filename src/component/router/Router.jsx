@@ -8,6 +8,10 @@ import Main from '../main/Main';
 import Home from '../Home';
 import SingUp from '../authentication/SingUp';
 import SingIn from '../authentication/SingIn';
+import AddMoney from '../AddMoney';
+import CostInfo from '../CostInfo';
+import PrivateRoute from '../privateRoute/PrivateRoute';
+import Profile from '../Profile';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +29,18 @@ const router = createBrowserRouter([
         {
             path: "/singin",
             element: <SingIn></SingIn>
+        },
+        {
+          path: "/addmoney",
+          element: <PrivateRoute><AddMoney></AddMoney></PrivateRoute>
+        },
+        {
+          path: "/costinfo",
+          element: <PrivateRoute><CostInfo></CostInfo></PrivateRoute>
+        },
+        {
+          path: "/profile",
+          element: <Profile></Profile>
         }
     ]
   },

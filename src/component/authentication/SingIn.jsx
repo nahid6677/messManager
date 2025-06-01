@@ -1,15 +1,16 @@
 import React, { useState, useRef, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
 import AuthContext from '../context/AuthContext';
 
 const SingIn = () => {
-    const {signInUser} = useContext(AuthContext);
+    const {signInUser,setLoading,pupupLogin} = useContext(AuthContext);
     const [error, setError] = useState('')
     const [passShow, setPassShow] = useState(false)
     const emailRef = useRef(null);
      const navigate = useNavigate()
+     const location = useLocation();
 
     const isValidEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,22 +35,35 @@ const SingIn = () => {
             return
         }
         if (isValidEmail(email) && isValidPassword(password)) {
-            console.log({email,password})
+            // console.log({email,password})
             setError("")
             signInUser(email, password)
             .then(result =>{
                 console.log(result);
-                navigate("/")
+                // navigate("/")
+                setLoading(false)
+                navigate(location?.pathname ? location.state : "/")
             })
             .catch(err =>{
-                console.log(err);
-                setError(err);
+                // console.log(err);
+                 setLoading(false)
+                setError("In valid Password");
             })
         }
 
     }
 
     const handlePupUpLogin = () => {
+        pupupLogin()
+        .then(result =>{
+            setLoading(false)
+            navigate(location?.pathname ? location.state : "/")
+            console.log(result);
+        })
+        .catch(err =>{
+            setLoading(false)
+            console.log(err);
+        })
 
     }
     const handleForgot = () => {
