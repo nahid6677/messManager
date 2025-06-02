@@ -80,13 +80,9 @@ const SingUp = () => {
     }
 
     return (
-        <div className="w-10/12 mx-auto min-h-[calc(100vh-8rem)] justify-center gap-3 grid lg:grid-cols-2">
-            <div className="w-full  flex items-center">
-                <div className="w-2/3 mx-auto z-10">
-                    {/* <Lottie animationData={registerLottieData}></Lottie> */}
-                </div>
-            </div>
-            <div className='flex justify-center items-center'>
+    
+            
+            <div className='flex justify-center min-h-screen items-center'>
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                     <form onSubmit={handleSignup} className="card-body">
                         <div className="form-control">
@@ -144,7 +140,6 @@ const SingUp = () => {
                 </div>
             </div>
 
-        </div>
     );
 };
 

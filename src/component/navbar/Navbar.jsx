@@ -7,7 +7,7 @@ const Navbar = () => {
     const { user } = useContext(AuthContext);
     return (
         <div className="navbar bg-base-100 shadow-sm">
-            <div className="navbar-start">
+            <div className="navbar-start sm:block hidden">
                 <a className="btn btn-ghost text-xl">daisyUI</a>
             </div>
             <div className="navbar-center ">
