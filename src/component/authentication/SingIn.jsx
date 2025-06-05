@@ -57,7 +57,7 @@ const SingIn = () => {
         pupupLogin()
             .then(result => {
                 setLoading(false)
-                navigate(location?.pathname ? location.state : "/")
+                navigate(location?.pathname ? location.state === "/singin" ? "/" : location.state  : "/")
                 console.log(result);
             })
             .catch(err => {

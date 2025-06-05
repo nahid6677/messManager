@@ -7,7 +7,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const provider = new GoogleAuthProvider();
-console.log(loading)
+    // console.log(loading)
     const signUpUser = (email, pass) => {
         setLoading(true)
         return createUserWithEmailAndPassword(auth, email, pass);
@@ -24,7 +24,7 @@ console.log(loading)
         setLoading(true);
         return signOut(auth);
     }
-    const pupupLogin = () =>{
+    const pupupLogin = () => {
         setLoading(true);
         return signInWithPopup(auth, provider)
     }

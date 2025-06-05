@@ -6,7 +6,7 @@ import { FaRegUser } from 'react-icons/fa';
 const Navbar = () => {
     const { user } = useContext(AuthContext);
     return (
-        <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar bg-base-100 shadow-sm mx-auto w-11/12">
             <div className="navbar-start sm:block hidden">
                 <a className="btn btn-ghost text-xl">daisyUI</a>
             </div>
@@ -15,6 +15,7 @@ const Navbar = () => {
                     <li> <NavLink to={"/"}>Home</NavLink></li>
                     <li> <NavLink to={"/addmoney"}>Add money</NavLink></li>
                     <li> <NavLink to={"/costinfo"}>Cost info</NavLink></li>
+                    <li> <NavLink to={"/addborder"}>Add Border</NavLink></li>
                 </ul>
             </div>
             <div className="navbar-end ">
