@@ -15,7 +15,7 @@ const Navbar = () => {
                     <li> <NavLink to={"/"}>Home</NavLink></li>
                     <li> <NavLink to={"/addmoney"}>Add money</NavLink></li>
                     <li> <NavLink to={"/costinfo"}>Cost info</NavLink></li>
-                    <li> <NavLink to={"/addborder"}>Add Border</NavLink></li>
+                    <li> <NavLink to={"/addborder"}>Borders</NavLink></li>
                 </ul>
             </div>
             <div className="navbar-end ">

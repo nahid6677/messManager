@@ -19,7 +19,7 @@ const AddMoney = () => {
         const currentUserName = user.displayName;
         const currentEmail = user.email;
         const moneyAddDate = formattedDate;
-        const Id = "683ebea519dc186693eeba8d"
+        const Id = "684d599d9a6656cfa94b5525"
         const blance = { [moneyAddDate]: [Nahid, currentUserName, currentEmail] }
 
         if (Nahid) {
@@ -66,7 +66,7 @@ const AddMoney = () => {
     const handleJohir = () => {
         const currentUser = user.displayName;
         const currentEmail = user.email;
-        const Id = "683ec07819dc186693eeba8f"
+        const Id = "684d5a349a6656cfa94b5527"
         const Johir = johirRef.current.value;
         const blance = { [formattedDate]: [Johir, currentUser, currentEmail] }
 
@@ -117,7 +117,7 @@ const AddMoney = () => {
     const handleAzis = () => {
         const currentUser = user.displayName;
         const currentEmail = user.email;
-        const Id = "683ec05119dc186693eeba8e"
+        const Id = "684d59eb9a6656cfa94b5526"
         const Azis = azisRef.current.value;
         const blance = { [formattedDate]: [Azis, currentUser, currentEmail] }
         // console.log(Azis)
@@ -167,7 +167,7 @@ const AddMoney = () => {
         serError("")
         const currentUser = user.displayName;
         const currentEmail = user.email;
-        const Id = "683ec09419dc186693eeba90"
+        const Id = "684d5a539a6656cfa94b5528"
         const Yeamin = yeaminRef.current.value;
         const blance = { [formattedDate]: [Yeamin, currentUser, currentEmail] }
         // console.log(blance)
@@ -220,7 +220,7 @@ const AddMoney = () => {
         serError("")
         const currentUser = user.displayName;
         const currentEmail = user.email;
-        const Id = "683ec0a119dc186693eeba91"
+        const Id = "684d5a6a9a6656cfa94b5529"
         const Tanjur = tanjurRef.current.value;
         const blance = { [formattedDate]: [Tanjur, currentUser, currentEmail] }
         // console.log(blance)

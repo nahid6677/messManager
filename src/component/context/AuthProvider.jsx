@@ -6,7 +6,9 @@ import { auth } from '../firebase/firebase.init';
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [borderC, setBorderC]  = useState(1);
     const provider = new GoogleAuthProvider();
+
     // console.log(loading)
     const signUpUser = (email, pass) => {
         setLoading(true)
@@ -38,7 +40,10 @@ const AuthProvider = ({ children }) => {
         loading,
         logOut,
         pupupLogin,
-        setUser
+        setUser,
+        setBorderC,
+        borderC
+
     }
     // console.log(user)
     useEffect(() => {

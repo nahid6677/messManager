@@ -5,22 +5,28 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 const Home = () => {
-    const { user } = useContext(AuthContext);
+    const { user, setBorderC, borderC } = useContext(AuthContext);
     const [costData, setCostData] = useState([])
     const [reload, setReload] = useState(false);
+    // const [borderC, setBorderC]  = useState(1);
+    // console.log(borderC)
+    let totalAmount = 0;
     const navigate = useNavigate();
     const Datee = new Date();
     const iso = Datee.toISOString();
     const entryDate = `${String(Datee.getDate()).padStart(2, '0')}-${String(Datee.getMonth() + 1).padStart(2, '0')}-${Datee.getFullYear()}T${iso.split('T')[1]}`;
+    costData?.forEach(data => totalAmount += parseFloat(data.costAmount))
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
         const product = form.product.value;
         const costAmount = form.taka.value;
+        const modify = { isModify: false, modifyPerson: null, modifyTime: null }
+
         if (user) {
             const userName = user?.displayName;
-            const data = { product, costAmount, entryDate, userName }
+            const data = { product, costAmount, entryDate, userName, modify }
             // console.log(data);
             axios.post(`http://localhost:5000/addcost`, data, {})
                 .then(responce => {
@@ -39,17 +45,18 @@ const Home = () => {
             navigate("/signup")
         }
 
-        
+
     }
-//     const handleEdit = (id) =>{
-// console.log(id)
-//         axios.put(`http://localhost:5000/costedit/${id}`, {})
-//         .then(res => {
-//             console.log(res.data);
-//         })
-//     }
+    //     const handleEdit = (id) =>{
+    // console.log(id)
+    //         axios.put(`http://localhost:5000/costedit/${id}`, {})
+    //         .then(res => {
+    //             console.log(res.data);
+    //         })
+    //     }
 
     useEffect(() => {
+
         // fetch("http://localhost:5000/allcost")
         //     .then(res => res.json())
         //     .then(data => {
@@ -58,11 +65,19 @@ const Home = () => {
         //     })
         axios.get("http://localhost:5000/allcost", {})
             .then(res => {
-                // console.log(res.data)
                 setCostData(res.data)
                 setReload(false);
             })
     }, [reload])
+    useEffect(() => {
+        axios.get("http://localhost:5000/bordercount", {})
+            .then(response => {
+                console.log(response.data)
+                if (response.data?.count) {
+                    setBorderC(response.data?.count)
+                }
+            })
+    }, [])
     return (
         <div className='w-full'>
 
@@ -71,40 +86,76 @@ const Home = () => {
                     {/* head */}
                     <thead>
                         <tr>
-                            <th>
-                                Prodect
-                            </th>
-                            <th>Cost</th>
-                            <th>Date</th>
-                            {/* <th>Favorite Color</th> */}
-                            <th>Edit</th>
+                            <th className='text-center'> Prodect </th>
+                            <th className='text-center'>Cost</th>
+                            <th className='text-center'>Date</th>
+                            <th className='text-center'>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
                         {/* row 1 */}
                         {
-                            costData.map((cost,idx) => {
-                               return <tr key={idx}>
-                                    <th>
-                                        {
+                            costData.map((cost, idx) => {
+                                return <tr key={idx}>
+                                    <th className='text-center'>
+                                        <p>{
                                             cost?.product
-                                        }
+
+                                        }</p>
+                                        <p className='text-xs font-extralight text-orange-200'>
+                                            {
+                                                cost?.modify?.isModify === true && "modifyed"
+                                            }
+                                        </p>
                                     </th>
-                                    <td>
-                                        {cost?.costAmount}
+                                    <td className='text-center'>
+                                        <p>{cost?.costAmount}</p>
+                                        <p className='text-xs font-extralight text-orange-200'>
+                                            {
+                                                cost?.modify?.isModify === true && cost?.modify?.modifyPerson
+                                            }
+                                        </p>
                                     </td>
-                                    <td>
-                                       {
-                                        cost?.entryDate.slice(0,5)
-                                       } <span className='text-xs text-blue-800'>{cost?.userName.slice(0,5)}</span>
+                                    <td className='text-center'>
+                                        <p>
+                                            {
+                                                cost?.entryDate.slice(0, 5)
+                                            }
+                                            <span className='text-xs text-blue-800'>{cost?.userName.slice(0, 5)}</span>
+                                        </p>
+                                        <p className='text-xs font-extralight text-orange-200'>
+                                            {
+                                                 cost?.modify?.isModify === true && cost?.modify?.modifyTime.slice(0, 5)
+                                            }
+                                        </p>
                                     </td>
                                     {/* <td>Purple</td> */}
-                                    <th>
+                                    <th className='text-center'>
                                         <Link to={`/costUpdate/${cost?._id}`}><button className="btn border border-blue-200 btn-ghost btn-xs">Edit</button></Link>
                                     </th>
                                 </tr>
                             })
                         }
+                        <tr className=''>
+                            <td className='text-xl text-center text-red-500 font-bold'>
+                                Total
+                            </td>
+                            <td className='text-xl text-center text-red-500 font-bold'>
+
+                                {
+                                    totalAmount
+                                }
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td className='text-xl text-center text-red-500 font-bold'>
+                                Per Head
+                            </td>
+                            <td className='text-xl text-center text-red-500 font-bold'>
+                                {(totalAmount / borderC).toFixed(2)}
+                            </td>
+                        </tr>
 
                     </tbody>
 
@@ -127,7 +178,7 @@ const Home = () => {
                         <label className="label">
                             <span className="label-text">Cost Amount</span>
                         </label>
-                        <input name='taka'  type="number"  placeholder="Taka" className="input w-full input-bordered" required />
+                        <input name='taka' type="number" placeholder="Taka" className="input w-full input-bordered" required />
 
                     </div>
                     <div className="form-control mt-6">

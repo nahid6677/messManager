@@ -15,6 +15,7 @@ import Profile from '../Profile';
 import NewBorder from '../NewBorder';
 import Moneyadd from '../Moneyadd';
 import CostUpdate from '../CostUpdate';
+import AddMoneyAnother from '../AddMoneyAnother';
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/addmoney",
-        element: <PrivateRoute><AddMoney></AddMoney></PrivateRoute>
+        element: <PrivateRoute><AddMoneyAnother></AddMoneyAnother></PrivateRoute>
       },
       {
         path: "/costinfo",
