@@ -2,9 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
-const NewBorder = () => {
+const NewBorder = ({ creatorEMAIL }) => {
     const [borders, setBorders] = useState([]);
     const [reload, setRedload] = useState(false);
+    const creatorEmail = creatorEMAIL;
+    // const [creatorEmail, setCreatorElail] = useState(creatorEMAIL);
+    // console.log(creatorEmail)
 
     const handleAddBorder = (e) => {
         e.preventDefault();
@@ -15,9 +18,11 @@ const NewBorder = () => {
             year: "numeric"
         });
         const borderName = e.target.name.value;
+        const borderEmail = e.target.email.value;
         const entryDate = formatted;
-        const newBorder = { borderName, entryDate, role: "member", account: {} }
-        if (borderName) {
+        const newBorder = { borderName, entryDate, borderEmail, creatorEmail, role: "member", account: {} }
+        // console.log(newBorder);
+        if (borderName && borderEmail) {
             // console.log(newBorder)
 
 
@@ -98,7 +103,12 @@ const NewBorder = () => {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/allborders`, {})
+        // console.log({creatorEMAIL})
+        axios.get(`http://localhost:5000/allborders`, {
+            params:{
+                creatoremail: creatorEMAIL
+            }
+        })
             .then(res => {
                 // console.log(res.data);
                 setBorders(res.data);
@@ -117,6 +127,10 @@ const NewBorder = () => {
                             <span className="label-text">Add New Border</span>
                         </label>
                         <input type="text" name='name' placeholder="New Border Name" className="input input-bordered" required />
+                    </div>
+                    <div className="form-control">
+
+                        <input type="email" name='email' placeholder="New Border Email" className="input input-bordered" required />
                     </div>
 
                     <div className="form-control flex justify-center mt-6">

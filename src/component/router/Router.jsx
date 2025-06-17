@@ -16,6 +16,8 @@ import NewBorder from '../NewBorder';
 import Moneyadd from '../Moneyadd';
 import CostUpdate from '../CostUpdate';
 import AddMoneyAnother from '../AddMoneyAnother';
+import Mess from '../Mess';
+import ThisMess from '../ThisMess';
 
 const router = createBrowserRouter([
   {
@@ -54,6 +56,16 @@ const router = createBrowserRouter([
         path: "/costUpdate/:id",
         element: <CostUpdate></CostUpdate>,
         loader: ({params}) => fetch(`http://localhost:5000/costone/${params.id}`)
+      },
+      {
+        path: "/mymess",
+        element: <PrivateRoute><Mess></Mess></PrivateRoute>
+      },
+      {
+        path: "/thismess/:id",
+        element: <PrivateRoute><ThisMess></ThisMess></PrivateRoute>,
+        loader: ({params}) => fetch(`http://localhost:5000/borderone/${params.id}`)
+        
       }
     ]
   },

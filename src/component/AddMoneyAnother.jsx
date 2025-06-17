@@ -12,7 +12,11 @@ const AddMoneyAnother = () => {
     const formattedDate = `${String(Datee.getDate()).padStart(2, '0')}-${String(Datee.getMonth() + 1).padStart(2, '0')}-${Datee.getFullYear()}T${iso.split('T')[1]}`;
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/allborders`, {})
+        axios.get(`http://localhost:5000/addmoneyspecific`, {
+            params: {
+                useremail: user?.email
+            }
+        })
             .then(res => {
                 // console.log(res.data);
                 setBorders(res.data);
