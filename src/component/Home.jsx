@@ -49,8 +49,6 @@ const Home = () => {
         } else {
             navigate("/signup")
         }
-
-
     }
     //     const handleEdit = (id) =>{
     // console.log(id)
@@ -82,12 +80,18 @@ const Home = () => {
         setReload(false);
     }, [reload])
     useEffect(() => {
-        axios.get("http://localhost:5000/bordercount", {})
+        axios.get("http://localhost:5000/bordercount", {
+            params: {
+                borderMail: user?.email
+            }
+        })
             .then(response => {
                 console.log(response.data)
                 if (response.data?.count) {
                     setBorderC(response.data?.count)
                 }
+            }).catch(err => {
+                console.log(err)
             })
     }, [])
     return (
