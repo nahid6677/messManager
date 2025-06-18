@@ -9,7 +9,7 @@ const ThisMess = () => {
     const { user } = useContext(AuthContext);
     const [data] = useLoaderData()
     const navigate = useNavigate();
-    console.log(data);
+    // console.log(data);
     const handleAddBorder = () => {
 
     }
@@ -25,7 +25,7 @@ const ThisMess = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/deleteborder/${id}`,)
+                axios.delete(`http://localhost:5000/deletemess/${id}`,)
                     .then(res => {
                         console.log(res.data)
                         if (res.data.deletedCount) {

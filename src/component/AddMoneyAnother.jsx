@@ -7,6 +7,7 @@ const AddMoneyAnother = () => {
     const { user } = useContext(AuthContext);
     const [borders, setBorders] = useState([]);
     const [error, serError] = useState("")
+    const userMail = user?.email;
     const Datee = new Date();
     const iso = Datee.toISOString();
     const formattedDate = `${String(Datee.getDate()).padStart(2, '0')}-${String(Datee.getMonth() + 1).padStart(2, '0')}-${Datee.getFullYear()}T${iso.split('T')[1]}`;
@@ -14,7 +15,7 @@ const AddMoneyAnother = () => {
     useEffect(() => {
         axios.get(`http://localhost:5000/addmoneyspecific`, {
             params: {
-                useremail: user?.email
+                useremail: userMail
             }
         })
             .then(res => {

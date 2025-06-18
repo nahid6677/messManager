@@ -21,7 +21,11 @@ const CostInfo = () => {
                 console.log(err);
             })
 
-        axios.get("http://localhost:5000/totalcost", {})
+        axios.get("http://localhost:5000/totalcost", {
+            params: {
+                userMail: user?.email
+            }
+        })
             .then(res => {
                 // console.log(res.data);
                 setTCost(res.data);
@@ -30,9 +34,6 @@ const CostInfo = () => {
                 console.log(err)
             })
     }, [])
-
-   
-
     return (
         <div className='flex flex-col items-center'>
             <div className="overflow-x-auto w-11/12 mx-auto md:w-4/5">

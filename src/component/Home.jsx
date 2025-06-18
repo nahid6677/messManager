@@ -72,6 +72,7 @@ const Home = () => {
         })
             .then(res => {
                 setCostData(res.data)
+                // console.log(res.data)
                 // setReload(false);
             })
             .catch(err => {
@@ -86,7 +87,7 @@ const Home = () => {
             }
         })
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 if (response.data?.count) {
                     setBorderC(response.data?.count)
                 }
