@@ -17,7 +17,7 @@ const Home = () => {
     const entryDate = `${String(Datee.getDate()).padStart(2, '0')}-${String(Datee.getMonth() + 1).padStart(2, '0')}-${Datee.getFullYear()}T${iso.split('T')[1]}`;
     costData?.forEach(data => totalAmount += parseFloat(data.costAmount))
 
-    const handleSubmit = (e) => {
+    const handleSubmitCost = (e) => {
         e.preventDefault();
         const form = e.target;
         const product = form.product.value;
@@ -26,9 +26,14 @@ const Home = () => {
 
         if (user) {
             const userName = user?.displayName;
-            const data = { product, costAmount, entryDate, userName, modify }
-            // console.log(data);
-            axios.post(`http://localhost:5000/addcost`, data, {})
+            const borderEmail = user?.email;
+            const data = { product, costAmount, entryDate, userName, borderEmail, modify }
+            console.log(data);
+            axios.post(`http://localhost:5000/addcost`, data, {
+                params: {
+                    borderUserEmail: user?.email
+                }
+            })
                 .then(responce => {
                     if (responce.data) {
                         console.log(responce.data);
@@ -56,18 +61,25 @@ const Home = () => {
     //     }
 
     useEffect(() => {
-
         // fetch("http://localhost:5000/allcost")
         //     .then(res => res.json())
         //     .then(data => {
         //         setCostData(data);
         //         console.log(data.userName)
         //     })
-        axios.get("http://localhost:5000/allcost", {})
+        axios.get("http://localhost:5000/allcost", {
+            params: {
+                borderMail: user?.email
+            }
+        })
             .then(res => {
                 setCostData(res.data)
-                setReload(false);
+                // setReload(false);
             })
+            .catch(err => {
+                console.log(err)
+            })
+        setReload(false);
     }, [reload])
     useEffect(() => {
         axios.get("http://localhost:5000/bordercount", {})
@@ -80,7 +92,6 @@ const Home = () => {
     }, [])
     return (
         <div className='w-full'>
-
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
@@ -93,14 +104,12 @@ const Home = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* row 1 */}
                         {
                             costData.map((cost, idx) => {
                                 return <tr key={idx}>
                                     <th className='text-center'>
                                         <p>{
                                             cost?.product
-
                                         }</p>
                                         <p className='text-xs font-extralight text-orange-200'>
                                             {
@@ -125,7 +134,7 @@ const Home = () => {
                                         </p>
                                         <p className='text-xs font-extralight text-orange-200'>
                                             {
-                                                 cost?.modify?.isModify === true && cost?.modify?.modifyTime.slice(0, 5)
+                                                cost?.modify?.isModify === true && cost?.modify?.modifyTime.slice(0, 5)
                                             }
                                         </p>
                                     </td>
@@ -141,12 +150,10 @@ const Home = () => {
                                 Total
                             </td>
                             <td className='text-xl text-center text-red-500 font-bold'>
-
                                 {
                                     totalAmount
                                 }
                             </td>
-
                         </tr>
                         <tr>
                             <td className='text-xl text-center text-red-500 font-bold'>
@@ -161,13 +168,8 @@ const Home = () => {
 
                 </table>
             </div>
-
-
-
-
-
             <div className="card mx-auto bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                <form onSubmit={handleSubmit} className="card-body">
+                <form onSubmit={handleSubmitCost} className="card-body">
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">Sector of expenditure</span>

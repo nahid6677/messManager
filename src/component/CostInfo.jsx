@@ -8,7 +8,11 @@ const CostInfo = () => {
     const [tcost, setTCost] = useState(null);
     // let totalCost; 
     useEffect(() => {
-        axios.get(`http://localhost:5000/allborders`, {})
+        axios.get(`http://localhost:5000/addmoneyspecific`, {
+            params:{
+                useremail: user?.email
+            }
+        })
             .then(res => {
                 // console.log(res.data);
                 setBorders(res.data);
