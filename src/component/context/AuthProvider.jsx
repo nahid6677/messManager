@@ -7,6 +7,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [borderC, setBorderC]  = useState(1);
+    const [theme, setTheme] = useState(null);
     const provider = new GoogleAuthProvider();
 
     // console.log(loading)
@@ -42,7 +43,9 @@ const AuthProvider = ({ children }) => {
         pupupLogin,
         setUser,
         setBorderC,
-        borderC
+        borderC,
+        setTheme,
+        theme
 
     }
     // console.log(user)

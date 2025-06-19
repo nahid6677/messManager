@@ -2,13 +2,15 @@ import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import { FaRegUser } from 'react-icons/fa';
+import ThemToggle from '../toggle/ThemToggle';
 
 const Navbar = () => {
     const { user } = useContext(AuthContext);
     return (
         <div className="navbar bg-base-100 shadow-sm mx-auto w-11/12">
             <div className="navbar-start sm:block hidden">
-                <a className="btn btn-ghost text-xl">daisyUI</a>
+                {/* <a className="btn btn-ghost text-xl">daisyUI</a> */}
+                <ThemToggle></ThemToggle>
             </div>
             <div className="navbar-center ">
                 <ul className="menu menu-horizontal px-1">
