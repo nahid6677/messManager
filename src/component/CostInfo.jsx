@@ -3,13 +3,13 @@ import AuthContext from './context/AuthContext';
 import axios from 'axios';
 
 const CostInfo = () => {
-    const { user,borderC } = useContext(AuthContext);
+    const { user, borderC } = useContext(AuthContext);
     const [borders, setBorders] = useState([]);
     const [tcost, setTCost] = useState(null);
     // let totalCost; 
     useEffect(() => {
         axios.get(`http://localhost:5000/addmoneyspecific`, {
-            params:{
+            params: {
                 useremail: user?.email
             }
         })
@@ -50,7 +50,10 @@ const CostInfo = () => {
                         {
                             borders.map((border, idx) => <tr key={idx}>
                                 <td>
-                                    <div className="text-sm sm:text-xl ">{border.borderName}</div>
+                                    <div >
+                                        <p className="text-sm sm:text-xl ">{border.borderName}</p>
+                                        <p className='text-xs'>{border?.borderEmail}</p>
+                                    </div>
                                 </td>
                                 <td>
                                     <div className="text-sm sm:text-xl "> {Object.entries(border?.account).map(([key, value], idx) => (
@@ -78,7 +81,7 @@ const CostInfo = () => {
                     </tbody>
                 </table>
             </div>
-           
+
 
         </div>
     );

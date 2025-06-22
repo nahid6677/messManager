@@ -4,9 +4,10 @@ import Swal from 'sweetalert2';
 import AuthContext from './context/AuthContext';
 
 const NewBorder = ({ creatorEMAIL }) => {
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const [borders, setBorders] = useState([]);
     const [reload, setRedload] = useState(false);
+    // const [err , setErr] = useState("")
     const creatorEmail = creatorEMAIL;
     // const [creatorEmail, setCreatorElail] = useState(creatorEMAIL);
     console.log(creatorEmail, user?.email)
@@ -26,8 +27,6 @@ const NewBorder = ({ creatorEMAIL }) => {
         // console.log(newBorder);
         if (borderName && borderEmail) {
             // console.log(newBorder)
-
-
             Swal.fire({
                 title: "Are you sure?",
                 html: `
@@ -45,7 +44,7 @@ const NewBorder = ({ creatorEMAIL }) => {
                         secure: false
                     })
                         .then(result => {
-                            // console.log(result.data)
+                            console.log(result.data)
                             if (result.data?.insertedId) {
                                 setRedload(true)
                                 Swal.fire({
@@ -53,6 +52,9 @@ const NewBorder = ({ creatorEMAIL }) => {
                                     text: `${borderName} is Added successfully`,
                                     icon: "success"
                                 });
+                            }
+                            if(result.data?.thisBorder){
+
                             }
                         })
                         .catch(err => {
@@ -64,50 +66,53 @@ const NewBorder = ({ creatorEMAIL }) => {
     }
     const handleDeleteBorder = (id) => {
         // console.log(id);
+        if (creatorEmail === user?.email) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // axios.delete(`http://localhost:5000/deleteborder/${id}`,{})
+                    // .then(res => {
+                    //     console.log(res.data);
+                    // })
+                    // .catch(err =>{
+                    //     console.log(err);
+                    // })
 
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // axios.delete(`http://localhost:5000/deleteborder/${id}`,{})
-                // .then(res => {
-                //     console.log(res.data);
-                // })
-                // .catch(err =>{
-                //     console.log(err);
-                // })
-
-                fetch(`http://localhost:5000/deleteborder/${id}`, {
-                    method: "DELETE"
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        // console.log(data)
-                        if (data.deletedCount > 0) {
-                            setBorders(previous => previous.filter(pre => pre._id !== id))
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                icon: "success"
-                            });
-                        }
+                    fetch(`http://localhost:5000/deleteborder/${id}`, {
+                        method: "DELETE"
                     })
+                        .then(res => res.json())
+                        .then(data => {
+                            // console.log(data)
+                            if (data.deletedCount > 0) {
+                                setBorders(previous => previous.filter(pre => pre._id !== id))
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: "Your file has been deleted.",
+                                    icon: "success"
+                                });
+                            }
+                        })
+                }
+            });
+        } else {
+            console.log("You are not elegible for delete the border")
+        }
 
-            }
-        });
+
     }
 
     useEffect(() => {
         // console.log({creatorEMAIL})
         axios.get(`http://localhost:5000/allborders`, {
-            params:{
+            params: {
                 creatoremail: creatorEMAIL
             }
         })

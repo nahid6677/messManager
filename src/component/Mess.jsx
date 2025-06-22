@@ -25,7 +25,7 @@ const Mess = () => {
         const entryDate = formatted;
         const border = { messName, borderName, entryDate, role, creatorEmail, borderEmail, account: {} }
         // console.log(border);
-        axios.post(`http://localhost:5000/addborder`, border, {})
+        axios.post(`http://localhost:5000/addmess`, border, {})
             .then(res => {
                 console.log(res.data);
                 setReload(true);
