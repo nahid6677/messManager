@@ -8,7 +8,7 @@ const Home = () => {
     const { user, setBorderC, borderC } = useContext(AuthContext);
     const [costData, setCostData] = useState([])
     const [reload, setReload] = useState(false);
-    // const [borderC, setBorderC]  = useState(1);
+    const [err, seterr]  = useState("");
     // console.log(borderC)
     let totalAmount = 0;
     const navigate = useNavigate();
@@ -24,11 +24,12 @@ const Home = () => {
         const costAmount = form.taka.value;
         const modify = { isModify: false, modifyPerson: null, modifyTime: null }
 
-        if (user) {
+        if (user && parseInt(costAmount) > 0) {
+            seterr("")
             const userName = user?.displayName;
             const borderEmail = user?.email;
             const data = { product, costAmount, entryDate, userName, borderEmail, modify }
-            console.log(data);
+            // console.log(data);
             axios.post(`http://localhost:5000/addcost`, data, {
                 params: {
                     borderUserEmail: user?.email
@@ -47,17 +48,10 @@ const Home = () => {
                     }
                 })
         } else {
-            navigate("/signup")
+            seterr("Please enter the positive value")
+            // navigate("/signup")
         }
     }
-    //     const handleEdit = (id) =>{
-    // console.log(id)
-    //         axios.put(`http://localhost:5000/costedit/${id}`, {})
-    //         .then(res => {
-    //             console.log(res.data);
-    //         })
-    //     }
-
     useEffect(() => {
         // fetch("http://localhost:5000/allcost")
         //     .then(res => res.json())
@@ -186,7 +180,7 @@ const Home = () => {
                             <span className="label-text">Cost Amount</span>
                         </label>
                         <input name='taka' type="number" placeholder="Taka" className="input w-full input-bordered" required />
-
+                            {err}
                     </div>
                     <div className="form-control mt-6">
                         <button className="btn btn-primary w-full">Submit</button>

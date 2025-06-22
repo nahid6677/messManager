@@ -54,15 +54,15 @@ const CostInfo = () => {
                                 </td>
                                 <td>
                                     <div className="text-sm sm:text-xl "> {Object.entries(border?.account).map(([key, value], idx) => (
-                                        <p key={idx}>{key.slice(0, 5)} : <span className='text-blue-300'>{value[0]}</span> <span className='text-xs text-blue-900'>{value[1].slice(0, 5)}</span></p>
+                                        <p className='text-lg font-bold' key={idx}>{key.slice(0, 5)} : <span className='text-blue-800 text-lg'>{value[0]}</span> <br></br> <span className='text-xs text-blue-900'>{value[1].split(" ").slice(0, 2).join(" ")}</span></p>
                                     ))}</div>
                                 </td>
-                                <td>
-                                    <div className="text-sm sm:text-xl text-blue-500"> {
+                                <td className='text-center'>
+                                    <div className="text-lg font-bold sm:text-xl text-blue-500"> {
                                         Object.entries(border?.account || {}).reduce((acc, [key, value]) => {
                                             return acc + parseInt(value[0], 10); // 10 is decemel number;
                                         }, 0)
-                                    } <br></br> <span className='text-red-400'> -{(tcost / borderC).toFixed(1)}</span>
+                                    } <br></br> <span className='text-red-300 text-sm'> -{(tcost / borderC).toFixed(0)}</span>
                                     </div>
 
                                     {

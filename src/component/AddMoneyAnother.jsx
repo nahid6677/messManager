@@ -36,7 +36,7 @@ const AddMoneyAnother = () => {
         const currentEmail = user.email;
         const moneyAddDate = formattedDate;
         const blance = { [moneyAddDate]: [amountTK, currentUserName, currentEmail] }
-        if (amountTK) {
+        if (parseInt(amountTK) > 0) {
             serError("")
             // console.log(id, amountTK, thisBorder);
             Swal.fire({
@@ -78,20 +78,21 @@ const AddMoneyAnother = () => {
             });
         }
         else {
-            serError("Please Enter Value")
+            serError("Please enter the positive value")
         }
     }
     return (
         <div className='flex flex-col gap-2 items-center'>
             {
-                borders.map((border, idx) => <div key={idx} className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                    <form onSubmit={(e) => handleSubmit(e, border._id)} className="flex gap-2">
+                borders.map((border, idx) => <div key={idx} className="card w-full max-w-sm">
+                    <form onSubmit={(e) => handleSubmit(e, border._id)} className="flex gap-2 justify-start">
                         <div className="form-control">
                             <input type="number" name={border._id} placeholder={border?.borderName} className="input input-bordered" required />
                         </div>
-                        <div className="form-control  ">
-                            <button className="btn btn-primary"> Add {border?.borderName}</button>
+                        <div className="">
+                            <button className="btn btn-primary "> Add {border?.borderName}</button>
                         </div>
+                        {error && error}
                     </form>
                 </div>)
             }

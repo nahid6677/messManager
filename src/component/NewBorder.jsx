@@ -1,13 +1,15 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import AuthContext from './context/AuthContext';
 
 const NewBorder = ({ creatorEMAIL }) => {
+    const {user} = useContext(AuthContext);
     const [borders, setBorders] = useState([]);
     const [reload, setRedload] = useState(false);
     const creatorEmail = creatorEMAIL;
     // const [creatorEmail, setCreatorElail] = useState(creatorEMAIL);
-    // console.log(creatorEmail)
+    console.log(creatorEmail, user?.email)
 
     const handleAddBorder = (e) => {
         e.preventDefault();

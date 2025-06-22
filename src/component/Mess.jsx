@@ -25,23 +25,19 @@ const Mess = () => {
         const entryDate = formatted;
         const border = { messName, borderName, entryDate, role, creatorEmail, borderEmail, account: {} }
         // console.log(border);
-
         axios.post(`http://localhost:5000/addborder`, border, {})
             .then(res => {
                 console.log(res.data);
                 setReload(true);
                 if (res.data?.creator) {
-                    setErr(res.data?.creator && "Only one mess can contain a person")
+                    setErr(res.data?.creator || "Only one mess can contain a person")
                 } else {
                     setErr("")
-
                 }
-
             })
             .catch(err => {
                 console.log(err)
             })
-
     }
     useEffect(() => {
         axios.get(`http://localhost:5000/crteatormess`, {
